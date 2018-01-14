@@ -74,15 +74,14 @@ goto :eof
 
 :install
 if not exist "%LOCALAPPDATA%\Lua" mkdir "%LOCALAPPDATA%\Lua"
-if if not exist "%LOCALAPPDATA%\Lua\include" mkdir "%LOCALAPPDATA%\Lua\include"
+if not exist "%LOCALAPPDATA%\Lua\include" mkdir "%LOCALAPPDATA%\Lua\include"
 if not exist "%LOCALAPPDATA%\Lua\bin" mkdir "%LOCALAPPDATA%\Lua\bin"
 if not exist "%LOCALAPPDATA%\Lua\src" mkdir "%LOCALAPPDATA%\Lua\src"
 xcopy /y *.exe "%LOCALAPPDATA%\Lua"
 xcopy /y *.dll "%LOCALAPPDATA%\Lua\bin"
 xcopy /y *.h "%LOCALAPPDATA%\Lua\include"
-xcopy /y *.s "%LOCALAPPDATA%\Lua\src"
+xcopy /y *.c "%LOCALAPPDATA%\Lua\src"
 echo ""
 echo Your DLL and exe files are in %LOCALAPPDATA%\Lua
-echo Setting path
-setx PATH "%PATH%;%LOCALAPPDATA%\Lua"
+echo Append the above directory to path if you want to use lua from the command prompt
 goto :eof

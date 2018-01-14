@@ -3,7 +3,7 @@ Build Script for Lua (windows)
 
 A short script with some error printing; expanded version of https://blog.spreendigital.de/2015/01/16/how-to-compile-lua-5-3-0-for-windows/
 
-Credit to the original author
+Credit to the original author, Dennis D. Spreen
 
 ## Requirements
 

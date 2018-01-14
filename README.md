@@ -5,13 +5,13 @@ A short script with some error printing; expanded version of https://blog.spreen
 
 Credit to the original author
 
-##Requirements
+## Requirements
 
 Should have Visual Studio 2017 installed on the computer
 
 The Visual Studio developer command prompt environment is used to build Lua. Visual Studio Build tools should also be up to date.
 
-##Usage
+## Usage
 
 1) Place the make.bat file in the src folder of the extracted Lua folder
 

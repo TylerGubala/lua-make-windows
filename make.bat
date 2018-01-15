@@ -80,9 +80,10 @@ xcopy /y *.c "%INSTALLDIR%\src"
 mklink %INSTALLDIR%\lua.exe %INSTALLDIR%\bin\lua.exe
 mklink %INSTALLDIR%\luac.exe %INSTALLDIR%\bin\luac.exe
 echo.
-echo Links to the .exe files are in %INSTALLDIR%
+echo The lua .exe and .dll files are in %INSTALLDIR%\bin
 echo.
 echo Append the above directory to path if you want to use lua from the command prompt
+for /f "skip=2 tokens=3*" %%a in ('reg query HKCU\Environment /v PATH') do if [%%b]==[] ( setx PATH "%%~a;%INSTALLDIR%\bin" && set ok=1 ) else ( setx PATH "%%~a %%~b;%INSTALLDIR%\bin" && set ok=1 )
 echo.
 echo.
 goto :eof

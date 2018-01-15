@@ -6,7 +6,7 @@ if defined PROCESSOR_ARCHITECTURE (
         call :setup
         call :build
         call :install
-        echo "Successfully built Lua for windows 64-bit (amd64)"
+        echo Successfully built Lua for windows %PROCESSOR_ARCHITECTURE%
         goto :eof
     )
     if /I "%PROCESSOR_ARCHITECTURE%"=="x86" (
@@ -14,7 +14,7 @@ if defined PROCESSOR_ARCHITECTURE (
         call :setup
         call :build
         call :install
-        echo "Successfully built Lua for windows 32-bit (x86)"
+        echo Successfully built Lua for windows %PROCESSOR_ARCHITECTURE%
         goto :eof
     )
 )
@@ -24,7 +24,7 @@ if defined PROCESSOR_ARCHITECTUREW6432 (
         call :setup
         call :build
         call :install
-        echo "Successfully built Lua for windows 64-bit (WOW6432)"
+        echo Successfully built Lua for windows WOW6432 %PROCESSOR_ARCHITECTUREW6432%
         goto :eof
     )
     if /I "%PROCESSOR_ARCHITECTUREW6432%"=="x86" (
@@ -32,7 +32,7 @@ if defined PROCESSOR_ARCHITECTUREW6432 (
         call :setup
         call :build
         call :install
-        echo "Successfully built Lua for windows 32-bit (WOW6432)"
+        echo Successfully built Lua for windows WOW6432 %PROCESSOR_ARCHITECTUREW6432%
         goto :eof
     )
 )
@@ -40,16 +40,15 @@ call :archinvalid
 goto :eof
 
 :archinvalid
-echo "Your platform archetecture could not be determined: %platform%"
+echo Your platform archetecture could not be determined: %platform%
 goto :eof
 
 :vserror
-echo "Visual Studio 2017 not installed, or the environment variable VS2017INSTALLDIR is not set, please remedy this and try again"
+echo Visual Studio 2017 not installed, or the environment variable VS2017INSTALLDIR is not set, please remedy this and try again
 goto :eof
 
 :setup
 if defined VS2017INSTALLDIR (
-    if defined platform (echo "Platform is defined") else (echo "Platform is not defined")
     call "%VS2017INSTALLDIR%\VC\Auxiliary\Build\vcvars%platform%"
     goto :eof
 )
@@ -69,18 +68,21 @@ link /OUT:luac.exe luac.o lua-static.lib
 goto :eof
 
 :install
-if not exist "%LOCALAPPDATA%\Lua" mkdir "%LOCALAPPDATA%\Lua"
-if not exist "%LOCALAPPDATA%\Lua\include" mkdir "%LOCALAPPDATA%\Lua\include"
-if not exist "%LOCALAPPDATA%\Lua\bin" mkdir "%LOCALAPPDATA%\Lua\bin"
-if not exist "%LOCALAPPDATA%\Lua\src" mkdir "%LOCALAPPDATA%\Lua\src"
-xcopy /y *.exe "%LOCALAPPDATA%\Lua"
-xcopy /y *.dll "%LOCALAPPDATA%\Lua\bin"
-xcopy /y *.h "%LOCALAPPDATA%\Lua\include"
-xcopy /y *.c "%LOCALAPPDATA%\Lua\src"
+set INSTALLDIR="%LOCALAPPDATA%\Lua"
+if not exist "%INSTALLDIR%" mkdir "%INSTALLDIR%"
+if not exist "%INSTALLDIR%\include" mkdir "%INSTALLDIR%\include"
+if not exist "%INSTALLDIR%\bin" mkdir "%INSTALLDIR%\bin"
+if not exist "%INSTALLDIR%\src" mkdir "%INSTALLDIR%\src"
+xcopy /y *.exe "%INSTALLDIR%\bin"
+xcopy /y *.dll "%INSTALLDIR%\bin"
+xcopy /y *.h "%INSTALLDIR%\include"
+xcopy /y *.c "%INSTALLDIR%\src"
+mklink %INSTALLDIR%\lua.exe %INSTALLDIR%\bin\lua.exe
+mklink %INSTALLDIR%\luac.exe %INSTALLDIR%\bin\luac.exe
 echo.
-echo "Your DLL and exe files are in %LOCALAPPDATA%\Lua"
+echo Links to the .exe files are in %INSTALLDIR%
 echo.
-echo "Append the above directory to path if you want to use lua from the command prompt"
+echo Append the above directory to path if you want to use lua from the command prompt
 echo.
 echo.
 goto :eof

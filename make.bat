@@ -6,7 +6,7 @@ if defined PROCESSOR_ARCHITECTURE (
         call :setup
         call :build
         call :install
-        echo Successfully built Lua for windows %platform%
+        echo "Successfully built Lua for windows 64-bit (amd64)"
         goto :eof
     )
     if /I "%PROCESSOR_ARCHITECTURE%"=="x86" (
@@ -14,7 +14,7 @@ if defined PROCESSOR_ARCHITECTURE (
         call :setup
         call :build
         call :install
-        echo Successfully built Lua for windows %platform%
+        echo "Successfully built Lua for windows 32-bit (x86)"
         goto :eof
     )
 )
@@ -24,7 +24,7 @@ if defined PROCESSOR_ARCHITECTUREW6432 (
         call :setup
         call :build
         call :install
-        echo Successfully built Lua for windows %platform%
+        echo "Successfully built Lua for windows 64-bit (WOW6432)"
         goto :eof
     )
     if /I "%PROCESSOR_ARCHITECTUREW6432%"=="x86" (
@@ -32,7 +32,7 @@ if defined PROCESSOR_ARCHITECTUREW6432 (
         call :setup
         call :build
         call :install
-        echo Successfully built Lua for windows %platform%
+        echo "Successfully built Lua for windows 32-bit (WOW6432)"
         goto :eof
     )
 )
@@ -40,15 +40,11 @@ call :archinvalid
 goto :eof
 
 :archinvalid
-echo "Your platform archetecture could not be determined: " platform
-goto :eof
-
-:argerror
-echo "Platform must be one of: %platforms%"
+echo "Your platform archetecture could not be determined: %platform%"
 goto :eof
 
 :vserror
-echo Visual Studio 2017 not installed, or the environment variable VS2017INSTALLDIR is not set, please remedy this and try again
+echo "Visual Studio 2017 not installed, or the environment variable VS2017INSTALLDIR is not set, please remedy this and try again"
 goto :eof
 
 :setup
@@ -81,7 +77,10 @@ xcopy /y *.exe "%LOCALAPPDATA%\Lua"
 xcopy /y *.dll "%LOCALAPPDATA%\Lua\bin"
 xcopy /y *.h "%LOCALAPPDATA%\Lua\include"
 xcopy /y *.c "%LOCALAPPDATA%\Lua\src"
-echo ""
-echo Your DLL and exe files are in %LOCALAPPDATA%\Lua
-echo Append the above directory to path if you want to use lua from the command prompt
+echo.
+echo "Your DLL and exe files are in %LOCALAPPDATA%\Lua"
+echo.
+echo "Append the above directory to path if you want to use lua from the command prompt"
+echo.
+echo.
 goto :eof
